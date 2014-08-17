@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- SQL XML created by WWW SQL Designer, http://code.google.com/p/wwwsqldesigner/ -->
+<!-- Active URL: file:///C:/Documents%20and%20Settings/n/My%20Documents/Downloads/wwwsqldesigner-2.6/wwwsqldesigner-2.6/index.html -->
+<sql>
+<datatypes db="mysql">
+	<group label="Numeric" color="rgb(238,238,170)">
+		<type label="Integer" length="0" sql="INTEGER" re="INT" quote=""/>
+		<type label="Decimal" length="1" sql="DECIMAL" re="DEC" quote=""/>
+		<type label="Single precision" length="0" sql="FLOAT" quote=""/>
+		<type label="Double precision" length="0" sql="DOUBLE" re="DOUBLE" quote=""/>
+	</group>
+
+	<group label="Character" color="rgb(255,200,200)">
+		<type label="Char" length="1" sql="CHAR" quote="'"/>
+		<type label="Varchar" length="1" sql="VARCHAR" quote="'"/>
+		<type label="Text" length="0" sql="MEDIUMTEXT" re="TEXT" quote="'"/>
+		<type label="Binary" length="1" sql="BINARY" quote="'"/>
+		<type label="Varbinary" length="1" sql="VARBINARY" quote="'"/>
+		<type label="BLOB" length="0" sql="BLOB" re="BLOB" quote="'"/>
+	</group>
+
+	<group label="Date &amp; Time" color="rgb(200,255,200)">
+		<type label="Date" length="0" sql="DATE" quote="'"/>
+		<type label="Time" length="0" sql="TIME" quote="'"/>
+		<type label="Datetime" length="0" sql="DATETIME" quote="'"/>
+		<type label="Year" length="0" sql="YEAR" quote=""/>
+		<type label="Timestamp" length="0" sql="TIMESTAMP" quote="'"/>
+	</group>
+	
+	<group label="Miscellaneous" color="rgb(200,200,255)">
+		<type label="ENUM" length="1" sql="ENUM" quote=""/>
+		<type label="SET" length="1" sql="SET" quote=""/>
+		<type label="Bit" length="0" sql="bit" quote=""/>
+	</group>
+</datatypes><table x="642" y="24" name="Character">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="name" null="0" autoincrement="0">
+<datatype>CHAR(255)</datatype>
+<default>'NULL'</default></row>
+<row name="stats" null="0" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="CharacterStat" row="id" />
+<comment>each character will have 7 after rolling and assigning</comment>
+</row>
+<row name="creation_date" null="0" autoincrement="0">
+<datatype>DATETIME</datatype>
+<default>'auto'</default></row>
+<row name="modified_date" null="0" autoincrement="0">
+<datatype>DATETIME</datatype>
+<default>'auto'</default></row>
+<row name="portrait" null="1" autoincrement="0">
+<datatype>BLOB</datatype>
+<default>NULL</default><comment>Django's image field type</comment>
+</row>
+<row name="story" null="1" autoincrement="0">
+<datatype>MEDIUMTEXT</datatype>
+<default>NULL</default><comment>character's life story</comment>
+</row>
+<row name="user" null="0" autoincrement="0">
+<datatype>INTEGER</datatype>
+<relation table="User" row="id" />
+</row>
+<row name="race" null="0" autoincrement="0">
+<datatype>INTEGER</datatype>
+<relation table="Race" row="id" />
+</row>
+<row name="posessions" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="Posessions" row="id" />
+</row>
+<row name="weapons" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="Weapons" row="id" />
+</row>
+<row name="cls" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="Cls" row="id" />
+<comment>"class" is a reserved word in Python</comment>
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="800" y="45" name="CharacterStat">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="name" null="0" autoincrement="0">
+<datatype>INTEGER</datatype>
+<relation table="Stat" row="id" />
+</row>
+<row name="value" null="0" autoincrement="0">
+<datatype>INTEGER</datatype>
+</row>
+<row name="value_suffix" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><comment>for the value after the slash on the str stat of 18</comment>
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+<comment>Each character normally has 7 so number of instances (rows) will be 7 times the number of characters in the system.</comment>
+</table>
+<table x="448" y="85" name="User">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="django-provided fields" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><comment>see django docs</comment>
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+<comment>Provided by Django</comment>
+</table>
+<table x="958" y="181" name="Race">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="name" null="0" autoincrement="0">
+<datatype>CHAR(60)</datatype>
+</row>
+<row name="abilities" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="RacialAbility" row="id" />
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="977" y="292" name="RacialAbility">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="name" null="0" autoincrement="0">
+<datatype>CHAR(60)</datatype>
+</row>
+<row name="explanation" null="1" autoincrement="0">
+<datatype>MEDIUMTEXT</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="670" y="358" name="ClsAbility">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="name" null="0" autoincrement="0">
+<datatype>CHAR(60)</datatype>
+</row>
+<row name="explanation" null="1" autoincrement="0">
+<datatype>MEDIUMTEXT</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="810" y="289" name="Cls">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="name" null="0" autoincrement="0">
+<datatype>CHAR(60)</datatype>
+</row>
+<row name="abilities" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="ClsAbility" row="id" />
+</row>
+<row name="allowed_races" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="Race" row="id" />
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+<comment>Class</comment>
+</table>
+<table x="468" y="181" name="Posessions">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="name" null="0" autoincrement="0">
+<datatype>CHAR(60)</datatype>
+</row>
+<row name="weight" null="1" autoincrement="0">
+<datatype>FLOAT</datatype>
+<default>NULL</default></row>
+<row name="value" null="1" autoincrement="0">
+<datatype>FLOAT</datatype>
+<default>NULL</default><comment>convert to gp before entering, e.g. 1 sp = .05</comment>
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="480" y="328" name="Weapons">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="name" null="0" autoincrement="0">
+<datatype>CHAR(60)</datatype>
+</row>
+<row name="weight" null="1" autoincrement="0">
+<datatype>FLOAT</datatype>
+<default>NULL</default></row>
+<row name="value" null="1" autoincrement="0">
+<datatype>FLOAT</datatype>
+<default>NULL</default><comment>convert to gp before entering, e.g. 1 sp = .05</comment>
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="989" y="49" name="Stat">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="name" null="0" autoincrement="0">
+<datatype>CHAR(35)</datatype>
+</row>
+<row name="abbreviation" null="0" autoincrement="0">
+<datatype>CHAR(6)</datatype>
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+<comment>Stores info about specific stats... there needs to be an instance of this model for each stat</comment>
+</table>
+</sql>

@@ -1,0 +1,68 @@
+﻿{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load ifsetting_tag %}
+{% block extra_head %}
+
+<style type="text/css" title="currentStyle">
+			@import "/site_media/static/css/sorty.css";
+		</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+<script>
+	$(function() {
+		$( "#sortable" ).sortable();
+		$( "#sortable" ).disableSelection();
+	});
+</script>
+<script>
+    function updateurl()
+    {
+        var t = "";
+        $("#sortable").children().each(function() {
+        t = t + $(this).text() + "_"});
+        url = "/cg/assignstats/{{character.id}}/" + t; 
+        $("#go").attr("href", url);
+    }
+    </script>
+        
+    
+{% endblock %}
+
+{% block head_title %}Create a new character{% endblock %}
+
+{% block body_class %}home{% endblock %}
+
+{% block body %}
+<h1>Sort your stats</h1>
+<p>Drag the numbers up or down to sort the list so that each number is next to the stat to which you wish to assign it. </p>
+<p>Tip: it is easiest if you work your way from the top down.</p><p>Check the order carefully before pressing the button to finalize.</p>
+<form action="/cg/stats/{{char_id}}/" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Roll 'em!" class="btn primary large" />
+</form>
+<div id="container" style="width:400px">
+	<div style="float:left">
+        <ul id="sortable">
+            {% for val in vals %}
+                <li>{{ val }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div style="float:left; margin-left:10px;">
+        <ul>
+            {% for stat in stats %}
+            <li>{{stat.name}}</li>
+            {% endfor %}
+            
+            {% for filler in fillers %}
+            <li>{{ filler }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div style="clear:both;height:20px;">&nbsp;</div>
+    <a id="go" href="/cg/assignstats/{{character.id}}/" onClick="updateurl()" class="btn primary large">Use these assignments</a>
+ 
+{% endblock %}
+
+

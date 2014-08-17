@@ -1,0 +1,114 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load ifsetting_tag %}
+
+{% block head_title %}Character List{% endblock %}
+
+{% block body_class %}home{% endblock %}
+
+{% block body %}
+    <h1>Character View</h1>
+    <h2>{{ character.name }}</h2>
+    <table>
+    <thead>
+    <tr>
+    <th>Property:</th>
+    <th>Value:</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+    <td>Name:</td>
+    <td>{{ character.name }}</td>
+    </tr>
+    <tr>
+    <td>Race:</td>
+    <td>{{ character.race }}</td>
+    </tr>
+    <tr>
+    <td>Hit Points:</td>
+    <td>{{ character.hp }}</td>
+    </tr>
+    <tr>
+    <td>Class:</td>
+    <td>{{ character.cls }}</td>
+    </tr>
+    <tr>
+    <td>Created:</td>
+    <td>{{ character.creation_date }}</td>
+    </tr>
+    <tr>
+    <td>Modified:</td>
+    <td>{{ character.modified_date }}</td>
+    </tr>
+    {% for stat in character.stats.all %}
+    <tr>
+    <td>{{ stat.name }}</td>
+    <td>{{ stat.value }}</td>
+    {% for mod in stat.name.ability_modifiers.all %}
+    {% if mod.stat_value == stat.value %}
+    <td>{{ mod.name }}: {{ mod.mod_value }}</td>
+    {% endif %}
+    {% endfor %}
+    </tr>
+    {% endfor %}
+    
+    {% if character.details != None %}
+    <tr>
+    <td>Height:</td>
+    <td>{{ character.details.height }}</td>
+    </tr>
+    <tr>
+    <td>Weight:</td>
+    <td>{{ character.details.weight }}</td>
+    </tr>
+    <tr>
+    <td>Hair:</td>
+    <td>{{ character.details.hair }}</td>
+    </tr>
+    <tr>
+    <td>Eyes:</td>
+    <td>{{ character.details.eyes }}</td>
+    </tr>
+    <tr>
+    <td>Alignment:</td>
+    <td>{{ character.details.alignment }}</td>
+    </tr>
+    <tr>
+    <td>History:</td>
+    <td>{{ character.details.story }}</td>
+    </tr>
+    {% endif %}
+    <tr>
+    <td>Weapon Proficiencies:</td>
+    {% for weapon in character.weapons.all %}
+    <td>{{ weapon.name }}</td>
+    {% endfor %}
+    </tr>
+    {% if character.spells.all|length > 0 %}
+    <tr>
+    <td>Spell Book:</td>
+    {% for spell in character.spells.all %}
+    <td>{{ spell.name }}</td>
+    {% endfor %}
+    </tr>
+    {% endif %}
+    {% if character.skills.all|length > 0 %}
+    <tr>
+    <td>Skills:</td>
+    {% for skill in character.skills.all %}
+    <td>{{ skill.name }}: {{skill.value}}</td>
+    {% endfor %}
+    </tr>
+    {% endif %}
+    </tbody>
+    </table>
+    <p>
+    <a class="btn primary large" href="/cg/list">List all characters</a> <span style;"width:40px">&nbsp;</span> 
+    <a class="btn primary large" href="/cg/printview/{{ character.id }}">Printable view</a> <span style;"width:40px">&nbsp;</span> 
+    <a class="btn primary large" href="/cg/delete/{{ character.id }}" onClick="return confirm('Permanently delete this character?')">Delete this character</a>
+    
+    </p>
+    
+{% endblock %}

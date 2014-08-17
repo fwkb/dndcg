@@ -1,0 +1,23 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load ifsetting_tag %}
+
+{% block head_title %}DnDCG Stat generation{% endblock %}
+
+<style>
+	#sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+	#sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
+	#sortable li span { position: absolute; margin-left: -1.3em; }
+</style>
+
+{% block body_class %}{% endblock %}
+
+{% block body %}
+    <p>Determine how to roll your stats, then hit "Roll 'em!"</p>
+    <form action="/cg/stats/{{char_id}}/" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Roll 'em!" class="btn primary large" />
+    </form>
+{% endblock %}

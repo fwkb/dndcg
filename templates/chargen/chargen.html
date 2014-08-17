@@ -1,0 +1,20 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load ifsetting_tag %}
+
+{% block head_title %}{{ step_number }}: {{ step_description }}{% endblock %}
+
+{% block body_class %}home{% endblock %}
+
+{% block body %}
+    <h1>{{ step_number }}</h1>
+    <h2>{{ step_description }}</h2>
+    <p>{{ step_note }}</p>
+    {% for key, value in stat_values.items %}
+    <p>{{ key }} : {{ value }}</p>
+    {% empty %}
+    <p>Nothin' here</p>
+    {% endfor %}
+    <p>Notes would go here</p>
+{% endblock %}

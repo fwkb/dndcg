@@ -1,0 +1,41 @@
+{% extends "theme_base.html" %}
+
+{% load metron_tags %}
+{% load i18n %}
+
+{% block extra_head %}
+<style type="text/css" title="currentStyle">
+			@import "/site_media/static/css/demo_table.css";
+		</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+<script src="{{ STATIC_URL }}js/jquery.dataTables.min.js"></script>
+
+
+<script>
+$(document).ready(function() {
+    $('#example').dataTable();
+} );
+</script>
+{% endblock %}
+
+{% block nav %}
+    {% if user.is_authenticated %}
+        <ul>{% spaceless %}
+            <li id="tab_profile"><a href="{% url profile_detail user.username %}">{% trans "Profile" %}</a></li>
+            <li id="tab_notices"><a href="{% url notification_notices %}">{% trans "Notices" %}{% if notice_unseen_count %} ({{ notice_unseen_count }}){% endif %}</a></li>
+            <li id="tab_characters"><a href="/cg/list">Characters</a></li>
+        {% endspaceless %}</ul>
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+{% endblock %}
+
+{% block footer %}
+    {% include "_footer.html" %}
+{% endblock %}
+
+{% block extra_body_base %}
+    {% analytics %}
+    {% block extra_body %}{% endblock %}
+{% endblock %}

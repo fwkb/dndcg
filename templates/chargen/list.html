@@ -1,0 +1,40 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load ifsetting_tag %}
+
+{% block head_title %}Character List{% endblock %}
+
+{% block body_class %}home{% endblock %}
+
+{% block body %}
+    <h1>Character List</h1>
+    <h2>Characters for {{user.username}}:</h2>
+    <table id="example" class="display">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Race</th>
+            <th>Class</th>
+            <th>Level</th>
+            <th>Created</th>
+            <th>Modifed</th>
+        </tr>
+    </thead>    
+    <tbody>
+    {% for character in user.character_set.all %}
+        <tr>
+            <td><a href="/cg/view/{{character.id}}">{{character.name}}</a></td>
+            <td>{{character.race}}</td>
+            <td>{{character.cls}}</td>
+            <td>{{character.level}}</td>
+            <td>{{character.creation_date}}</td>
+            <td>{{character.modified_date}}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+
+    <p style="clear:both;padding-top:20px;"><a class="btn primary large" href="create">Create a new character</a></p>
+
+{% endblock %}

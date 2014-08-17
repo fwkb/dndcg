@@ -1,0 +1,53 @@
+{% extends "banner_base.html" %}
+
+{% load i18n %}
+{% load ifsetting_tag %}
+
+{% block head_title %}{% trans "Welcome" %}{% endblock %}
+
+{% block body_class %}home{% endblock %}
+
+{% block banner %}
+    <h1>Welcome to DnDCG.com</h1>
+    <p>
+        <b>DnDCG</b> is a project by Mark Frasier. The intention is to provide a system for creating Advanced Dungeons &amp; Dragons version 2.0 characters. 
+    </p>
+    
+
+	Currently operational features:
+    </p>
+    <ul>
+	<li>Basic <a href="http://www.djangoproject.com">Django</a> &amp; 
+		<a href="http://www.pinaxproject.com">Pinax</a> set up</li>
+	<li>User/account/profile management</li>
+	<li>Basic site <a href="/admin">administration</a></li>
+    <li>Basic data models</li>
+    <li>Basic templates</li>
+    <li><a href="/cg/list">Character list</a></li>
+    <li>Create character</li>
+    <li>View character</li>
+    <li>Print-friendly character view</li>
+    <li>Delete character</li>
+    </ul>
+    {% block column-1 %}
+    {% endblock %}
+    {% block column-2 %}
+    {% endblock %}
+    {% block column-3 %}
+    {% endblock %}
+    {% block column-4 %}
+    {% endblock %}
+    
+    {% if user.is_authenticated %}
+        {% url what_next as what_next_url %}
+        <p class="what_next">Start at the <a href="/cg/list" class="btn primary large">Character List</a> page.</p>
+    {% else %}
+        {% url acct_login as login_url %}
+        {% ifsetting ACCOUNT_OPEN_SIGNUP %}
+            {% url acct_signup as signup_url %}
+            <p>Would you like to <a href="{{ login_url }}" class="btn">Log In</a> or <a href="{{ signup_url }}" class="btn primary">Sign Up</a> to try out the site?</p>
+        {% else %}
+            <p>You can <a href="{{ login_url }}" class="btn primary large">Log In</a> to try out the site.</p>
+        {% endifsetting %}
+    {% endif %}
+{% endblock %}

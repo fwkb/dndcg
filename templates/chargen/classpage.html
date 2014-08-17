@@ -1,0 +1,32 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load ifsetting_tag %}
+{% block extra_head %}
+<style type="text/css">
+label {float:none; font-weight:bold}
+li label {font-weight:normal;width:200px;}
+li {list-style-type:none}
+ul.errorlist {width:150px;}
+</style>
+{% endblock %}
+{% block head_title %}{{character.cls}} Page{% endblock %}
+
+{% block body_class %}home{% endblock %}
+
+{% block body %}
+<h1>{{character.cls}} Page</h1>
+{% if form_message != "" %}
+<p style="color:red;font-size:17px;">{{form_message}}</p>
+{% endif %}
+<p>As a {{character.cls}}, your starting hit points are {{character.hp}}.</p>
+<p>{{proficiency_message}}</p>
+<p>{{skill_message}}</p>
+    <form action="/cg/{{character.cls}}/{{character.id}}/" method="post">
+    {% csrf_token %}
+    <table>
+    {{ form.as_table }}
+    </table>
+    <input type="submit" value="Next" class="btn primary large" />
+    </form>
+{% endblock %}
